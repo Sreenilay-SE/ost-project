@@ -1,0 +1,133 @@
+╔══════════════════════════════════════════════════════════════╗
+║        OPEN SOURCE TECH — 3D LANDING PAGE                   ║
+║                     TECH STACK                               ║
+╚══════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CORE TECHNOLOGIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  HTML5
+  └─ Semantic structure, ES Module importmap for CDN imports,
+     native browser APIs (no bundler or build step needed)
+
+  CSS3 (Vanilla — no frameworks)
+  └─ Glassmorphism: backdrop-filter blur + saturation
+  └─ Custom properties (CSS variables) for the full design system
+  └─ Keyframe animations for loader, pulse effects, hover states
+  └─ position: fixed spatial layout for the HUD/overlay system
+  └─ Responsive design via media queries
+
+  JavaScript (ES Modules — no frameworks, no bundlers)
+  └─ Single self-contained ES module (scene.js) handles BOTH
+     3D rendering AND all UI interaction logic
+  └─ Event-driven architecture: CustomEvents connect 3D actions
+     to DOM panel reveals
+  └─ Raycaster-based 3D click detection on floating node meshes
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  3D RENDERING ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Three.js v0.163.0  (loaded via jsDelivr CDN)
+  └─ WebGLRenderer with antialiasing, ACES Filmic tone mapping,
+     and sRGB color space output
+  └─ PerspectiveCamera with smooth lerp-based fly-to transitions
+  └─ MeshStandardMaterial for all objects (metalness + roughness
+     PBR workflow, correctly lit by directional lights)
+
+  3D Scene Elements:
+  └─ Knowledge Sphere:
+       • SphereGeometry core (radius 3.0, 64×64 segments)
+       • IcosahedronGeometry wireframe cage (radius 5.2)
+       • OctahedronGeometry translucent shell
+       • 40 orbiting TetrahedronGeometry glass shards
+       • 3 TorusGeometry decorative rings
+  └─ 4 Floating Orbital Nodes (About/Activities/Resources/Connect):
+       • OctahedronGeometry solid core
+       • OctahedronGeometry wireframe cage
+       • IcosahedronGeometry outer shell
+       • TorusGeometry glowing ring
+       • 6 SphereGeometry satellite dots with orbital animation
+  └─ PlaneGeometry background architectural grid (wireframe)
+  └─ 300 BufferGeometry ambient particles
+
+  Lighting Rig (Studio Setup):
+  └─ AmbientLight (warm white, intensity 5.0)
+  └─ DirectionalLight key light (warm, intensity 5.0 + shadows)
+  └─ DirectionalLight fill light (cool blue, intensity 3.5)
+  └─ PointLight gold accent (animated, orbiting)
+  └─ PointLight silver accent (animated, orbiting)
+
+  Camera Physics:
+  └─ Magnetic cursor drift: lerp(currentPos, target + mouseOffset)
+  └─ Fly-to animation: smooth z/x/y lerp over 1.4 seconds
+  └─ Exponential fog: FogExp2 for infinite-scale depth illusion
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TYPOGRAPHY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Google Fonts (loaded via CDN)
+  └─ Cormorant Garamond — Elegant serif for all panel headings
+     and the hero title (weights 300, 400, 500, italic variants)
+  └─ DM Sans — Clean geometric sans-serif for body text
+     (weights 300, 400, 500)
+  └─ Outfit — UI elements: nav links, labels, CTAs, tags
+     (weights 200, 300, 400, 500)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  DESIGN SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Color Palette (CSS custom properties):
+  └─ Background:    #EEF1F7 (ultra-light blue-grey void)
+  └─ Surface:       rgba(255,255,255,0.62) frosted acrylic
+  └─ Text Primary:  #1a1c22
+  └─ Text Muted:    #8a8f9e
+  └─ Accent Gold:   #C9A96E  (champagne gold — all highlights)
+  └─ Accent Silver: #A8B4C8  (pearlescent steel blue)
+
+  Glassmorphism (liquid glass panels):
+  └─ backdrop-filter: blur(24px) saturate(180%)
+  └─ rgba(255,255,255,0.62) background
+  └─ 1px border: rgba(190,198,215,0.9)
+  └─ Inset top-edge highlight gradient (pearlescent gold)
+  └─ box-shadow: 3-layer depth shadow system
+
+  Interactions:
+  └─ Custom cursor (CSS pseudo-element, CSS variable tracked)
+  └─ Hover scale on node labels
+  └─ Gold underline sweep on nav links
+  └─ translateX slide-in on connect buttons
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  DEPLOYMENT / TOOLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Zero build step — runs directly in any modern browser
+  └─ Native ES Module imports (type="module")
+  └─ ImportMap for Three.js CDN resolution
+  └─ http-server (npm) for local development
+  └─ Compatible with Vercel / Netlify / GitHub Pages / any CDN
+     (just drag & drop the 3 files)
+
+  Files:
+  └─ index.html  (structure + content + importmap)
+  └─ style.css   (complete design system + animations)
+  └─ scene.js    (Three.js 3D scene + all UI logic)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SUMMARY (elevator pitch)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  "Built a zero-dependency, zero-build-step immersive 3D landing
+   page using Three.js for WebGL 3D rendering, pure Vanilla CSS
+   for glassmorphism UI, and native ES Modules for architecture.
+   No React, no Webpack, no TypeScript — just three files that
+   run natively in the browser with cinematic camera transitions,
+   real-time PBR lighting, and soft-body physics interactions."
