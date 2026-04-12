@@ -185,6 +185,7 @@ body.cursor-hover::before {
   color: var(--text-muted);
   letter-spacing: 0.03em;
 }
+.mobile-logo-text { display: none; }
 .nav-links {
   display: flex;
   list-style: none;
@@ -793,6 +794,19 @@ body.cursor-hover::before {
 
   #nav { padding: 0 20px; gap: 16px; }
   .logo-full { display: none; }
+  
+  .mobile-logo-text {
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .hero-transparent {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease;
+  }
 
   /* Hide node labels on mobile — hamburger menu handles navigation */
   #node-labels {

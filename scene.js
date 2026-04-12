@@ -572,3 +572,23 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+if (window.innerWidth < 768) {
+  let touchEndTimeout;
+  canvas.addEventListener('touchstart', () => {
+    const heroHud = document.getElementById('hero-hud');
+    if (heroHud) {
+      clearTimeout(touchEndTimeout);
+      heroHud.classList.add('hero-transparent');
+    }
+  });
+
+  canvas.addEventListener('touchend', () => {
+    const heroHud = document.getElementById('hero-hud');
+    if (heroHud) {
+      touchEndTimeout = setTimeout(() => {
+        heroHud.classList.remove('hero-transparent');
+      }, 2000);
+    }
+  });
+}
