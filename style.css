@@ -723,23 +723,79 @@ body.cursor-hover::before {
   .nav-hamburger { display: flex; }
   #mobile-menu { display: flex; }
 
+  /* Keep viewport locked — no empty scroll space */
+  html, body {
+    overflow: hidden;
+    cursor: auto;
+  }
+  /* Hide custom cursor on mobile — touch devices don't need it */
+  body::before { display: none; }
+
+  /* 3D canvas becomes a fixed decorative background layer */
+  #c {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.25;
+  }
+
+  /* Main content sits above the canvas */
   #hero-hud {
+    position: fixed;
+    z-index: 20;
     left: 24px;
     right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
     max-width: none;
+    pointer-events: none;
   }
-  .hero-title { font-size: 52px; }
+  #hero-hud.visible {
+    pointer-events: none;
+  }
+  #hero-hud.visible .hero-actions a,
+  #hero-hud.visible .hero-actions button {
+    pointer-events: auto;
+  }
+  #hero-hud.fade-out {
+    opacity: 0;
+    transform: translateY(-52%);
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 10vw, 48px);
+  }
+  .hero-sub {
+    max-width: 85%;
+    padding-right: 0;
+    font-size: 14px;
+  }
+
+  /* Info panels — fixed overlay on mobile, like desktop */
   .info-panel {
-    right: 16px;
+    position: fixed;
+    z-index: 50;
     left: 16px;
-    max-width: none;
+    right: 16px;
     top: auto;
-    bottom: 90px;
+    bottom: 80px;
+    max-width: none;
     transform: translateY(20px) scale(0.97);
   }
-  .info-panel.visible { transform: translateY(0) scale(1); }
+  .info-panel.visible {
+    transform: translateY(0) scale(1);
+  }
   .panel-glass { padding: 28px 24px; }
   .resource-grid { grid-template-columns: 1fr; }
+
   #nav { padding: 0 20px; gap: 16px; }
   .logo-full { display: none; }
+
+  /* Hide node labels on mobile — hamburger menu handles navigation */
+  #node-labels {
+    display: none;
+  }
 }

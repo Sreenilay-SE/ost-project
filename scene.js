@@ -125,8 +125,13 @@ function createKnowledgeSphere() {
 }
 
 const sphere = createKnowledgeSphere();
-sphere.position.x = 2.0; // offset right so 3D scene clears the hero text
+sphere.position.x = window.innerWidth < 768 ? 5.0 : 2.0; // push further right on mobile
 scene.add(sphere);
+
+// Update sphere offset on resize
+window.addEventListener('resize', () => {
+  sphere.position.x = window.innerWidth < 768 ? 5.0 : 2.0;
+});
 
 // ─── Floating Orbital Nodes ─────────────────────────────────
 const nodeData = [
@@ -492,6 +497,10 @@ const labelEls = floatingNodes.map(node => {
 });
 
 function updateLabels() {
+  const isMobile = window.innerWidth < 768;
+  // On mobile, node labels are hidden via CSS — skip positioning entirely
+  if (isMobile) return;
+
   labelEls.forEach(({ el, node }) => {
     const pos = node.userData.basePos.clone().project(camera);
     const x = (pos.x * 0.5 + 0.5) * window.innerWidth;
