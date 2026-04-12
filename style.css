@@ -783,7 +783,6 @@ body.cursor-hover::before {
     font-size: 14px;
   }
 
-  /* Info panels — fixed overlay on mobile, like desktop */
   .info-panel {
     position: fixed;
     z-index: 50;
@@ -793,18 +792,24 @@ body.cursor-hover::before {
     bottom: 80px;
     max-width: none;
     transform: translateY(20px) scale(0.97);
+    
     overflow-y: auto;
-    max-height: calc(100vh - 140px);
-    padding-bottom: 90px;
+    max-height: calc(100vh - 200px);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .info-panel::-webkit-scrollbar {
+    display: none;
   }
   .info-panel.visible {
     transform: translateY(0) scale(1);
   }
   .panel-glass {
-    padding: 28px 24px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+    padding: 28px 24px 100px 24px;
   }
   .r-card { margin-bottom: 12px; }
   .panel-list li { margin-bottom: 12px; }
