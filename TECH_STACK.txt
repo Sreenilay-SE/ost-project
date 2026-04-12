@@ -3,6 +3,20 @@
 ║                     TECH STACK                               ║
 ╚══════════════════════════════════════════════════════════════╝
 
+
+
+
+
+
+
+Replace all instances of "yourdomain.com" in robots.txt and sitemap.xml 
+with [YOUR ACTUAL DOMAIN HERE]. Do not modify anything else.
+
+
+
+
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   CORE TECHNOLOGIES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
