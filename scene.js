@@ -497,9 +497,6 @@ const labelEls = floatingNodes.map(node => {
 });
 
 function updateLabels() {
-  const isMobile = window.innerWidth < 768;
-  // On mobile, node labels are hidden via CSS — skip positioning entirely
-  if (isMobile) return;
 
   labelEls.forEach(({ el, node }) => {
     const pos = node.userData.basePos.clone().project(camera);
@@ -575,6 +572,9 @@ window.addEventListener('resize', () => {
 
 if (window.innerWidth < 768) {
   let touchEndTimeout;
+  let lastTouchX = null;
+  let lastTouchY = null;
+
   canvas.addEventListener('touchstart', (e) => {
     const heroHud = document.getElementById('hero-hud');
     if (heroHud) {
@@ -582,21 +582,43 @@ if (window.innerWidth < 768) {
       heroHud.classList.add('hero-transparent');
       canvas.classList.add('canvas-focused');
     }
+    if (e.touches.length > 0) {
+      lastTouchX = e.touches[0].clientX;
+      lastTouchY = e.touches[0].clientY;
+    }
   });
 
   canvas.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      mouse.nx = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
-      mouse.ny = -(e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+    if (e.touches.length > 0 && lastTouchX !== null) {
+      const deltaX = lastTouchX - e.touches[0].clientX;
+      const deltaY = e.touches[0].clientY - lastTouchY; // inverted Y
+
+      // Pan the camera directly by adjusting targetCam
+      targetCam.x += deltaX * 0.035;
+      targetCam.y += deltaY * 0.035;
+
+      lastTouchX = e.touches[0].clientX;
+      lastTouchY = e.touches[0].clientY;
+
+      // Keep parallax mouse values centered so they don't fight the pan
+      mouse.nx = 0;
+      mouse.ny = 0;
     }
   });
 
   canvas.addEventListener('touchend', () => {
     const heroHud = document.getElementById('hero-hud');
+    lastTouchX = null;
+    lastTouchY = null;
+
     if (heroHud) {
       touchEndTimeout = setTimeout(() => {
         heroHud.classList.remove('hero-transparent');
         canvas.classList.remove('canvas-focused');
+        
+        // Return camera to center smoothly when HUD reappears
+        targetCam.x = 0;
+        targetCam.y = 0;
       }, 2000);
     }
   });

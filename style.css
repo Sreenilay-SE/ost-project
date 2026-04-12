@@ -812,8 +812,16 @@ body.cursor-hover::before {
     transition: opacity 0.3s ease;
   }
 
-  /* Hide node labels on mobile — hamburger menu handles navigation */
+  /* Hide node labels on mobile by default, show when canvas is focused */
   #node-labels {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #c.canvas-focused ~ #node-labels {
+    opacity: 1;
+  }
+  .node-label {
+    pointer-events: auto;
   }
 }
