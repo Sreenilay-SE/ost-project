@@ -287,8 +287,29 @@ if (document.readyState === 'complete') {
 // Explore space
 if (exploreBtn) {
   exploreBtn.addEventListener('click', () => {
-    targetCam.z = 10;
-    setTimeout(() => { targetCam.z = 18; }, 2200);
+    if (window.innerWidth < 768) {
+      // Mobile explore experience: hide text, show full canvas and labels, zoom out slightly
+      const heroHud = document.getElementById('hero-hud');
+      const canvas  = document.getElementById('c');
+      if (heroHud && canvas) {
+        heroHud.classList.add('hero-transparent');
+        canvas.classList.add('canvas-focused');
+        
+        targetCam.x = 0;
+        targetCam.y = 0;
+        targetCam.z = 24; // Zoom out to see all nodes clearly
+
+        setTimeout(() => {
+          heroHud.classList.remove('hero-transparent');
+          canvas.classList.remove('canvas-focused');
+          targetCam.z = 18;
+        }, 4000); // immersive view for 4 seconds
+      }
+    } else {
+      // Desktop
+      targetCam.z = 10;
+      setTimeout(() => { targetCam.z = 18; }, 2200);
+    }
   });
 }
 
