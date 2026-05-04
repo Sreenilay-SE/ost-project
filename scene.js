@@ -288,20 +288,23 @@ if (document.readyState === 'complete') {
 if (exploreBtn) {
   exploreBtn.addEventListener('click', () => {
     if (window.innerWidth < 768) {
-      // Mobile explore experience: hide text, show full canvas and labels, zoom out slightly
+      // Mobile explore experience: hide text, show full canvas and labels, center everything
       const heroHud = document.getElementById('hero-hud');
       const canvas  = document.getElementById('c');
       if (heroHud && canvas) {
         heroHud.classList.add('hero-transparent');
         canvas.classList.add('canvas-focused');
         
-        targetCam.x = 0;
-        targetCam.y = 0;
-        targetCam.z = 24; // Zoom out to see all nodes clearly
+        // Center camera on the midpoint of sphere + nodes so everything is fully visible
+        targetCam.x = 2;
+        targetCam.y = -0.5;
+        targetCam.z = 28; // Zoom out enough to show all nodes + sphere centered
 
         setTimeout(() => {
           heroHud.classList.remove('hero-transparent');
           canvas.classList.remove('canvas-focused');
+          targetCam.x = 0;
+          targetCam.y = 0;
           targetCam.z = 18;
         }, 4000); // immersive view for 4 seconds
       }
