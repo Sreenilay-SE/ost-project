@@ -295,10 +295,10 @@ if (exploreBtn) {
         heroHud.classList.add('hero-transparent');
         canvas.classList.add('canvas-focused');
         
-        // Center camera on the midpoint of sphere + nodes so everything is fully visible
-        targetCam.x = 2;
-        targetCam.y = -0.5;
-        targetCam.z = 28; // Zoom out enough to show all nodes + sphere centered
+        // Center camera between the nodes and the sphere, and zoom out much further for narrow mobile screens
+        targetCam.x = 3.5;
+        targetCam.y = 0;
+        targetCam.z = 36;
 
         setTimeout(() => {
           heroHud.classList.remove('hero-transparent');
